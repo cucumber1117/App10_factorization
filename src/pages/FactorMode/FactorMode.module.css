@@ -1,9 +1,21 @@
 .card {
   padding: 22px;
-  border-radius: 30px;
-  background: rgba(255, 255, 255, 0.94);
-  border: 1px solid rgba(229, 231, 235, 0.9);
-  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.09);
+  border-radius: 8px;
+  background: #ffffff;
+  border: 3px solid #16213e;
+  box-shadow: 7px 7px 0 #16213e;
+}
+
+.topArea {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 16px;
+}
+
+.topArea > div:first-child {
+  min-width: 0;
 }
 
 .modeLabel {
@@ -11,8 +23,8 @@
   margin: 0 0 8px;
   padding: 6px 10px;
   border-radius: 999px;
-  background: #eef2ff;
-  color: #4f46e5;
+  background: #ffd166;
+  color: #16213e;
   font-size: 11px;
   font-weight: 900;
   letter-spacing: 0.1em;
@@ -22,76 +34,276 @@
 .card h2 {
   margin: 0;
   font-size: 30px;
-  letter-spacing: -0.05em;
+  letter-spacing: 0;
+  color: #16213e;
+  text-shadow: 2px 2px 0 #3bf4c8;
 }
 
 .description {
-  margin: 10px 0 20px;
-  color: #6b7280;
+  margin: 8px 0 0;
+  color: #475569;
   line-height: 1.7;
   font-size: 14px;
   font-weight: 600;
 }
 
+.calcIcon {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: #ff4d8d;
+  border: 3px solid #16213e;
+  box-shadow: 4px 4px 0 #16213e;
+  font-size: 28px;
+}
+
+.display {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding: 16px;
+  border-radius: 8px;
+  background: #f8fafc;
+  color: #16213e;
+  border: 3px solid #16213e;
+  box-shadow: 0 4px 0 #dbeafe;
+}
+
+.display span {
+  color: #475569;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.display strong {
+  font-size: 25px;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
 .inputArea {
   display: grid;
-  gap: 10px;
-  margin-bottom: 16px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  margin-bottom: 12px;
 }
 
 .input {
   width: 100%;
   box-sizing: border-box;
   padding: 17px 18px;
-  border: 2px solid #e5e7eb;
-  border-radius: 20px;
-  background: #f9fafb;
+  border: 3px solid #16213e;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #16213e;
   font-size: 18px;
   font-weight: 900;
   outline: none;
 }
 
 .input:focus {
-  border-color: #6366f1;
-  background: #ffffff;
-  box-shadow: 0 0 0 5px rgba(99, 102, 241, 0.12);
+  border-color: #ff4d8d;
+  background: #fff7ad;
+  box-shadow: 0 0 0 4px rgba(255, 77, 141, 0.18);
 }
 
 .button {
   min-height: 54px;
-  border: none;
-  border-radius: 20px;
-  padding: 0 20px;
-  background: linear-gradient(135deg, #6366f1, #22d3ee);
-  color: #ffffff;
+  border: 3px solid #16213e;
+  border-radius: 8px;
+  padding: 0 18px;
+  background: linear-gradient(135deg, #ff4d8d, #ffd166);
+  color: #16213e;
   font-size: 16px;
   font-weight: 900;
   cursor: pointer;
-  box-shadow: 0 12px 24px rgba(99, 102, 241, 0.24);
+  box-shadow: 0 5px 0 #16213e;
 }
 
 .button:active {
   transform: scale(0.98);
 }
 
+.exampleArea {
+  margin-top: 16px;
+}
+
+.exampleArea p {
+  margin: 0 0 10px;
+  color: #475569;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.exampleGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.exampleButton {
+  min-width: 0;
+  min-height: 44px;
+  border: 3px solid #16213e;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #16213e;
+  font-size: 14px;
+  font-weight: 900;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+
+.exampleButton:active {
+  transform: translate(2px, 2px);
+  box-shadow: inset 0 0 0 2px #ffd166;
+}
+
+.exampleButton:nth-child(1) {
+  background: #fff7ad;
+}
+
+.exampleButton:nth-child(2) {
+  background: #dbeafe;
+}
+
+.exampleButton:nth-child(3) {
+  background: #dcfce7;
+}
+
+.exampleButton:nth-child(4) {
+  background: #fce7f3;
+}
+
 .previewBox {
-  padding: 20px;
-  border-radius: 24px;
-  background: #111827;
-  color: #ffffff;
+  padding: 17px;
+  border-radius: 8px;
+  background: #fff7ad;
+  color: #16213e;
+  border: 3px solid #16213e;
+  box-shadow: 0 5px 0 #16213e;
 }
 
 .previewBox span {
   display: block;
   margin-bottom: 8px;
-  color: #9ca3af;
+  color: #be123c;
   font-size: 12px;
   font-weight: 900;
 }
 
 .previewBox strong {
   display: block;
-  font-size: 28px;
-  letter-spacing: -0.04em;
+  font-size: 24px;
+  letter-spacing: 0;
   overflow-wrap: anywhere;
+}
+
+.foundResult {
+  background: #dcfce7;
+}
+
+.foundResult span {
+  color: #166534;
+}
+
+@media (max-width: 430px) {
+  .card {
+    padding: 18px;
+    box-shadow: 4px 4px 0 #16213e;
+  }
+
+  .topArea {
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .card h2 {
+    font-size: 26px;
+  }
+
+  .calcIcon {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+  }
+
+  .display,
+  .previewBox {
+    padding: 14px;
+    box-shadow: 0 4px 0 #16213e;
+  }
+
+  .display strong,
+  .previewBox strong {
+    font-size: 21px;
+  }
+
+  .inputArea {
+    grid-template-columns: 1fr;
+  }
+
+  .input {
+    padding: 15px;
+    font-size: 16px;
+  }
+
+  .button {
+    min-height: 48px;
+  }
+
+  .exampleGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px;
+  }
+
+  .exampleButton {
+    min-height: 40px;
+    border-width: 2px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .card {
+    padding: 14px;
+    border-width: 2px;
+  }
+
+  .modeLabel {
+    font-size: 10px;
+    letter-spacing: 0.06em;
+  }
+
+  .card h2 {
+    font-size: 23px;
+  }
+
+  .description {
+    font-size: 13px;
+  }
+
+  .calcIcon {
+    width: 44px;
+    height: 44px;
+    border-width: 2px;
+    font-size: 22px;
+    box-shadow: 3px 3px 0 #16213e;
+  }
+
+  .display strong,
+  .previewBox strong {
+    font-size: 18px;
+  }
+
+  .button {
+    min-height: 50px;
+  }
+
+  .exampleGrid {
+    grid-template-columns: 1fr;
+  }
 }

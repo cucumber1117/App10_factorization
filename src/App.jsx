@@ -1,5 +1,4 @@
-import React from "react";
-import { NavLink, Route, Routes } from "react-router-dom";
+import { NavLink, Route, Routes, useLocation } from "react-router-dom";
 
 import Home from "./pages/Home/Home.jsx";
 import PracticeMode from "./pages/PracticeMode/PracticeMode";
@@ -8,39 +7,45 @@ import FactorMode from "./pages/FactorMode/FactorMode";
 import styles from "./App.module.css";
 
 export default function App() {
+  const { pathname } = useLocation();
+  const isPracticePage = pathname.startsWith("/practice/");
+  const isToolPage = isPracticePage || pathname === "/calculate";
+
   return (
     <div className={styles.app}>
-      <header className={styles.mobileHeader}>
-        <div>
-          <p className={styles.appLabel}>Math Quiz App</p>
-          <h1>因数分解アプリ</h1>
-        </div>
-      </header>
+      {!isToolPage && (
+        <header className={styles.mobileHeader}>
+          <div>
+            <p className={styles.appLabel}>Math Quiz App</p>
+            <h1>因数分解150問</h1>
+          </div>
+        </header>
+      )}
 
-      <main className={styles.main}>
+      <main className={isToolPage ? styles.practiceMain : styles.main}>
         <Routes>
           <Route path="/" element={<Home />} />
 
           <Route
             path="/practice/easy"
-            element={<PracticeMode level="easy" title="簡単" />}
+            element={<PracticeMode key="easy" level="easy" title="簡単" />}
           />
 
           <Route
             path="/practice/normal"
-            element={<PracticeMode level="normal" title="普通" />}
+            element={<PracticeMode key="normal" level="normal" title="普通" />}
           />
 
           <Route
             path="/practice/hard"
-            element={<PracticeMode level="hard" title="難しい" />}
+            element={<PracticeMode key="hard" level="hard" title="難しい" />}
           />
 
           <Route path="/calculate" element={<FactorMode />} />
         </Routes>
       </main>
 
-      <nav className={styles.bottomNav}>
+      <nav className={isToolPage ? styles.practiceBottomNav : styles.bottomNav}>
         <NavLink
           to="/"
           end
@@ -48,7 +53,7 @@ export default function App() {
             isActive ? styles.activeTab : styles.tab
           }
         >
-          <span>🏠</span>
+          <span className={styles.navIcon}>⌂</span>
           <p>ホーム</p>
         </NavLink>
 
@@ -58,7 +63,7 @@ export default function App() {
             isActive ? styles.activeTab : styles.tab
           }
         >
-          <span>🌱</span>
+          <span className={styles.navIcon}>+</span>
           <p>簡単</p>
         </NavLink>
 
@@ -68,7 +73,7 @@ export default function App() {
             isActive ? styles.activeTab : styles.tab
           }
         >
-          <span>📘</span>
+          <span className={styles.navIcon}>×</span>
           <p>普通</p>
         </NavLink>
 
@@ -78,7 +83,7 @@ export default function App() {
             isActive ? styles.activeTab : styles.tab
           }
         >
-          <span>🔥</span>
+          <span className={styles.navIcon}>x²</span>
           <p>難しい</p>
         </NavLink>
 
@@ -88,7 +93,7 @@ export default function App() {
             isActive ? styles.activeTab : styles.tab
           }
         >
-          <span>🧮</span>
+          <span className={styles.navIcon}>=</span>
           <p>計算</p>
         </NavLink>
       </nav>

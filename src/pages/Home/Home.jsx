@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./Home.module.css";
 
@@ -67,7 +66,7 @@ export default function Home() {
 
       <section className={styles.menuGrid}>
         <Link to="/practice/easy" className={styles.menuCard}>
-          <div className={styles.icon}>🌱</div>
+          <div className={styles.icon}>+</div>
           <div>
             <h2>簡単</h2>
             <p>まずは基本問題から。</p>
@@ -75,7 +74,7 @@ export default function Home() {
         </Link>
 
         <Link to="/practice/normal" className={styles.menuCard}>
-          <div className={styles.icon}>📘</div>
+          <div className={styles.icon}>×</div>
           <div>
             <h2>普通</h2>
             <p>少し考える問題に挑戦。</p>
@@ -83,7 +82,7 @@ export default function Home() {
         </Link>
 
         <Link to="/practice/hard" className={styles.menuCard}>
-          <div className={styles.icon}>🔥</div>
+          <div className={styles.icon}>x²</div>
           <div>
             <h2>難しい</h2>
             <p>応用問題で実力アップ。</p>
@@ -91,7 +90,7 @@ export default function Home() {
         </Link>
 
         <Link to="/calculate" className={styles.menuCard}>
-          <div className={styles.icon}>🧮</div>
+          <div className={styles.icon}>=</div>
           <div>
             <h2>計算</h2>
             <p>入力した式をチェック。</p>

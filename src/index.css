@@ -2,12 +2,15 @@
   box-sizing: border-box;
 }
 
+html,
 body {
   margin: 0;
   background: #f5f7fb;
+  overflow-x: hidden;
 }
 
 button,
-input {
+input,
+select {
   font-family: inherit;
 }

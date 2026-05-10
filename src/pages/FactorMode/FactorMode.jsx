@@ -1,10 +1,51 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { factorQuestions } from "../../data/factorQuestions";
 import styles from "./FactorMode.module.css";
+
+function normalizeExpression(value) {
+  return value
+    .replace(/[０-９]/g, (char) =>
+      String.fromCharCode(char.charCodeAt(0) - 0xfee0),
+    )
+    .replace(/ｘ/g, "x")
+    .replace(/Ｘ/g, "x")
+    .replace(/X/g, "x")
+    .replace(/²/g, "^2")
+    .replace(/３/g, "3")
+    .replace(/\s+/g, "")
+    .toLowerCase();
+}
+
+function formatMathText(text) {
+  return text
+    .replace(/\^2/g, "²")
+    .replace(/\^3/g, "³");
+}
 
 export default function FactorMode() {
   const [input, setInput] = useState("x^2 + 5x + 6");
+  const [result, setResult] = useState(null);
 
   const examples = ["x^2 + 5x + 6", "x^2 - 9", "x^2 + 7x + 12", "2x^2 + 7x + 3"];
+
+  function calculate() {
+    const normalizedInput = normalizeExpression(input);
+    const match = factorQuestions.find(
+      (question) => normalizeExpression(question.question) === normalizedInput,
+    );
+
+    setResult(
+      match
+        ? { status: "found", answer: match.answer }
+        : { status: "empty", answer: "" },
+    );
+  }
+
+  function chooseExample(example) {
+    setInput(example);
+    const match = factorQuestions.find((question) => question.question === example);
+    setResult(match ? { status: "found", answer: match.answer } : null);
+  }
 
   return (
     <section className={styles.card}>
@@ -22,20 +63,38 @@ export default function FactorMode() {
 
       <div className={styles.display}>
         <span>入力式</span>
-        <strong>{input || "式を入力してください"}</strong>
+        <strong>{formatMathText(input || "式を入力してください")}</strong>
       </div>
 
       <div className={styles.inputArea}>
         <input
           className={styles.input}
           value={input}
-          onChange={(e) => setInput(e.target.value)}
+          onChange={(e) => {
+            setInput(e.target.value);
+            setResult(null);
+          }}
           placeholder="例: x^2 + 5x + 6"
         />
 
-        <button type="button" className={styles.button}>
+        <button type="button" className={styles.button} onClick={calculate}>
           因数分解
         </button>
+      </div>
+
+      <div
+        className={`${styles.previewBox} ${
+          result?.status === "found" ? styles.foundResult : ""
+        }`}
+      >
+        <span>結果</span>
+        <strong>
+          {result?.status === "found"
+            ? formatMathText(result.answer)
+            : result?.status === "empty"
+              ? "登録済みの例題から見つかりませんでした"
+              : "式を入力して因数分解を押してください"}
+        </strong>
       </div>
 
       <div className={styles.exampleArea}>
@@ -47,17 +106,12 @@ export default function FactorMode() {
               key={example}
               type="button"
               className={styles.exampleButton}
-              onClick={() => setInput(example)}
+              onClick={() => chooseExample(example)}
             >
-              {example}
+              {formatMathText(example)}
             </button>
           ))}
         </div>
-      </div>
-
-      <div className={styles.previewBox}>
-        <span>結果表示エリア</span>
-        <strong>ここに因数分解の結果を表示</strong>
       </div>
     </section>
   );
