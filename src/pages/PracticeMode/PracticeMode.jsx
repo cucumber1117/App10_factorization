@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { factorQuestions } from "../../data/factorQuestions";
+import {
+  generateRandomQuestion,
+  generateRandomQuestions,
+} from "../../data/factorQuestions";
 import styles from "./PracticeMode.module.css";
 
 function normalizeFactorString(s) {
@@ -54,10 +57,6 @@ function isSameFactorAnswer(userAnswer, correctAnswer) {
   return userParts[0] === correctParts[0] && userParts[1] === correctParts[1];
 }
 
-function shuffleQuestions(questions) {
-  return [...questions].sort(() => Math.random() - 0.5);
-}
-
 const initialAnswer = {
   a1: "1",
   sign1: "+",
@@ -67,12 +66,15 @@ const initialAnswer = {
   n2: "",
 };
 
+const initialQuestionCount = 12;
+const pageQuestionCount = 30;
+
 export default function PracticeMode({ level, title }) {
   const navigate = useNavigate();
-  const [questions] = useState(() =>
-    shuffleQuestions(factorQuestions.filter((q) => q.level === level)),
+  const [questions, setQuestions] = useState(() =>
+    generateRandomQuestions(level, initialQuestionCount),
   );
-  const isHard = level === "hard";
+  const isHard = ["hard", "expert", "master"].includes(level);
 
   const [index, setIndex] = useState(0);
   const [answerParts, setAnswerParts] = useState(initialAnswer);
@@ -84,7 +86,36 @@ export default function PracticeMode({ level, title }) {
   const [finished, setFinished] = useState(false);
 
   const q = questions[index];
-  const total = questions.length;
+  const isCorrect = message.startsWith("正解");
+  const isWrong = message.startsWith("不正解");
+  const hasResult = isCorrect || isWrong;
+  const questionNumberInPage = (index % pageQuestionCount) + 1;
+  const pageNumber = Math.floor(index / pageQuestionCount) + 1;
+  const isPageLastQuestion = questionNumberInPage === pageQuestionCount;
+
+  function resetQuestionState() {
+    setAnswerParts(initialAnswer);
+    setMessage("");
+    setShowHint(false);
+    setFeedback(null);
+    setShowPassConfirm(false);
+  }
+
+  function advanceQuestion() {
+    setQuestions((currentQuestions) => {
+      if (index + 1 < currentQuestions.length) {
+        return currentQuestions;
+      }
+
+      return [
+        ...currentQuestions,
+        generateRandomQuestion(level, `${level}-${currentQuestions.length + 1}`),
+      ];
+    });
+    setIndex((i) => i + 1);
+    setFinished(false);
+    resetQuestionState();
+  }
 
   function updateAnswer(name, value) {
     const nextValue = ["a1", "n1", "a2", "n2"].includes(name)
@@ -135,12 +166,12 @@ export default function PracticeMode({ level, title }) {
   }
 
   function next() {
-    setIndex((i) => Math.min(i + 1, total - 1));
-    setAnswerParts(initialAnswer);
-    setMessage("");
-    setShowHint(false);
-    setFeedback(null);
-    setShowPassConfirm(false);
+    if (isPageLastQuestion) {
+      finish();
+      return;
+    }
+
+    advanceQuestion();
   }
 
   function requestPass() {
@@ -161,6 +192,15 @@ export default function PracticeMode({ level, title }) {
     setShowPassConfirm(false);
   }
 
+  function continuePractice() {
+    if (hasResult || isPageLastQuestion) {
+      advanceQuestion();
+      return;
+    }
+
+    setFinished(false);
+  }
+
   function goHome() {
     navigate("/");
   }
@@ -175,11 +215,8 @@ export default function PracticeMode({ level, title }) {
     );
   }
 
-  const isCorrect = message.startsWith("正解");
-  const isWrong = message.startsWith("不正解");
-  const hasResult = isCorrect || isWrong;
-  const isLastQuestion = index === total - 1;
-  const solvedCount = Math.min(index + (hasResult ? 1 : 0), total);
+  const solvedCount = index + (hasResult ? 1 : 0);
+  const nextQuestionNumber = isPageLastQuestion ? index + 2 : solvedCount + 1;
 
   if (finished) {
     return (
@@ -189,8 +226,8 @@ export default function PracticeMode({ level, title }) {
 
         <div className={styles.summaryGrid}>
           <div className={styles.summaryBox}>
-            <span>解いた問題</span>
-            <strong>{solvedCount}</strong>
+            <span>{pageNumber}セット目</span>
+            <strong>{Math.min(questionNumberInPage, pageQuestionCount)}</strong>
           </div>
 
           <div className={styles.summaryBox}>
@@ -200,8 +237,16 @@ export default function PracticeMode({ level, title }) {
         </div>
 
         <p className={styles.summaryText}>
-          {title}モードの結果です。次は別のレベルにも挑戦してみよう。
+          {title}モードは30問ごとに結果を確認できます。続けると{nextQuestionNumber}問目から再開します。
         </p>
+
+        <button
+          type="button"
+          className={styles.summaryContinueButton}
+          onClick={continuePractice}
+        >
+          続ける
+        </button>
 
         <button
           type="button"
@@ -268,13 +313,13 @@ export default function PracticeMode({ level, title }) {
 
       <div className={styles.progressArea}>
         <span>
-          問題 {index + 1} / {total}
+          問題 {index + 1}（{questionNumberInPage} / {pageQuestionCount}）
         </span>
 
         <div className={styles.progressBar}>
           <div
             className={styles.progress}
-            style={{ width: `${((index + 1) / total) * 100}%` }}
+            style={{ width: `${(questionNumberInPage / pageQuestionCount) * 100}%` }}
           />
         </div>
       </div>
@@ -462,9 +507,8 @@ export default function PracticeMode({ level, title }) {
               type="button"
               className={styles.resultNextButton}
               onClick={next}
-              disabled={isLastQuestion}
             >
-              {isLastQuestion ? "最後の問題" : "次へ"}
+              {isPageLastQuestion ? "結果へ" : "次へ"}
             </button>
           </div>
         </div>
@@ -482,7 +526,6 @@ export default function PracticeMode({ level, title }) {
             type="button"
             className={styles.moveButton}
             onClick={requestPass}
-            disabled={index === total - 1}
           >
             パス
           </button>

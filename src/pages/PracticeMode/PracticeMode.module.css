@@ -122,6 +122,7 @@
   line-height: 1.7;
 }
 
+.summaryContinueButton,
 .summaryHomeButton {
   position: relative;
   z-index: 1;
@@ -137,7 +138,16 @@
   box-shadow: 0 5px 0 #16213e;
 }
 
+.summaryContinueButton {
+  background: #3bf4c8;
+}
+
 .summaryHomeButton:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #16213e;
+}
+
+.summaryContinueButton:active {
   transform: translateY(3px);
   box-shadow: 0 2px 0 #16213e;
 }
@@ -943,6 +953,7 @@
     font-size: 34px;
   }
 
+  .summaryContinueButton,
   .summaryHomeButton {
     min-height: 48px;
     font-size: 14px;

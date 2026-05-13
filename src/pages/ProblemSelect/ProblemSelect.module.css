@@ -1,0 +1,165 @@
+.card {
+  min-height: calc(100dvh - 104px);
+  padding: 18px;
+  border: 3px solid #16213e;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 5px 5px 0 #16213e;
+}
+
+.header {
+  margin-bottom: 16px;
+}
+
+.modeLabel {
+  margin: 0 0 6px;
+  color: #f43f5e;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.header h2 {
+  margin: 0;
+  color: #16213e;
+  font-size: 28px;
+  font-weight: 950;
+  letter-spacing: 0;
+}
+
+.description {
+  margin: 8px 0 0;
+  color: #475569;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.levelGrid {
+  display: grid;
+  gap: 10px;
+}
+
+.levelCard {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 82px;
+  padding: 12px;
+  border: 3px solid #16213e;
+  border-radius: 8px;
+  color: #16213e;
+  text-decoration: none;
+  box-shadow: 0 4px 0 #16213e;
+  transition: 0.2s ease;
+}
+
+.levelCard:nth-child(1) {
+  background: #dcfce7;
+}
+
+.levelCard:nth-child(2) {
+  background: #dbeafe;
+}
+
+.levelCard:nth-child(3) {
+  background: #ffe4e6;
+}
+
+.levelCard:nth-child(4) {
+  background: #fef3c7;
+}
+
+.levelCard:nth-child(5) {
+  background: #ede9fe;
+}
+
+.levelCard:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #16213e;
+}
+
+.icon {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border: 2px solid #16213e;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: inset 0 -5px 0 #ffd166;
+  font-size: 22px;
+  font-weight: 950;
+  line-height: 1;
+}
+
+.levelText {
+  min-width: 0;
+}
+
+.levelText span {
+  color: #f43f5e;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.levelText h3 {
+  margin: 3px 0;
+  font-size: 20px;
+  font-weight: 950;
+  letter-spacing: 0;
+}
+
+.levelText p {
+  margin: 0;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.levelCard strong {
+  min-width: 46px;
+  min-height: 34px;
+  display: grid;
+  place-items: center;
+  padding: 0 9px;
+  border: 2px solid #16213e;
+  border-radius: 8px;
+  background: #ffffff;
+  font-size: 12px;
+  font-weight: 950;
+}
+
+@media (max-width: 430px) {
+  .card {
+    min-height: calc(100dvh - 96px);
+    padding: 14px;
+    box-shadow: 4px 4px 0 #16213e;
+  }
+
+  .header h2 {
+    font-size: 26px;
+  }
+
+  .levelCard {
+    grid-template-columns: 48px minmax(0, 1fr) auto;
+    min-height: 76px;
+    gap: 10px;
+    padding: 10px;
+    border-width: 2px;
+  }
+
+  .icon {
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .levelCard strong {
+    grid-column: auto;
+    justify-self: end;
+  }
+}

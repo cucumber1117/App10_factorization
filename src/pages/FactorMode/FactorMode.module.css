@@ -1,5 +1,6 @@
 .card {
   padding: 22px;
+  padding-bottom: 100px;
   border-radius: 8px;
   background: #ffffff;
   border: 3px solid #16213e;
@@ -213,6 +214,7 @@
 @media (max-width: 430px) {
   .card {
     padding: 18px;
+    padding-bottom: 150px;
     box-shadow: 4px 4px 0 #16213e;
   }
 
