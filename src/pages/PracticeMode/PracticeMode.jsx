@@ -343,6 +343,7 @@ export default function PracticeMode({ level, title }) {
                 onChange={(e) => updateAnswer("a1", e.target.value)}
                 placeholder="□"
                 inputMode="numeric"
+                pattern="[0-9]*"
               />
             )}
 
@@ -379,6 +380,7 @@ export default function PracticeMode({ level, title }) {
               onChange={(e) => updateAnswer("n1", e.target.value)}
               placeholder="○"
               inputMode="numeric"
+              pattern="[0-9]*"
             />
           </div>
 
@@ -394,6 +396,7 @@ export default function PracticeMode({ level, title }) {
                 onChange={(e) => updateAnswer("a2", e.target.value)}
                 placeholder="□"
                 inputMode="numeric"
+                pattern="[0-9]*"
               />
             )}
 
@@ -430,6 +433,7 @@ export default function PracticeMode({ level, title }) {
               onChange={(e) => updateAnswer("n2", e.target.value)}
               placeholder="○"
               inputMode="numeric"
+              pattern="[0-9]*"
             />
           </div>
 

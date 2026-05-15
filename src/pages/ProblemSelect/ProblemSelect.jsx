@@ -22,7 +22,7 @@ export default function ProblemSelect() {
           >
             <div className={styles.icon}>{level.icon}</div>
             <div className={styles.levelText}>
-              <span>ランダム生成</span>
+              <span>30問</span>
               <h3>{level.title}</h3>
               <p>{level.description}</p>
             </div>
